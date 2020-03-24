@@ -11,7 +11,7 @@ app.use(express.json());
  */
 app.post('/users/', (request, response) => {
   const params = request.body;
-  return response.json({ oi: params });
+  return response.json({ osi: params });
 });
 
 app.listen(3333);
