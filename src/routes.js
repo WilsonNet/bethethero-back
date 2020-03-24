@@ -1,6 +1,8 @@
 const express = require('express');
-const crypto = require('crypto');
-const connection = require('./database/connection');
+
+const OngController = require('./controllers/OngController');
+
+const IncidentsController = require('./controllers/IncidentController');
 
 const routes = express.Router();
 
@@ -10,26 +12,9 @@ const routes = express.Router();
  * Body - Corpo da req, criar ou alterar
  */
 
-routes.get('/ongs', async (request, response) => {
-  const ongs = await connection('ongs').select('*');
+routes.get('/ongs', OngController.index);
 
-  return response.json(ongs);
-});
-
-routes.post('/ongs', async (request, response) => {
-  const { name, email, whatsapp, city, uf } = request.body;
-  const id = crypto.randomBytes(4).toString('HEX');
-
-  await connection('ongs').insert({
-    id,
-    name,
-    email,
-    whatsapp,
-    city,
-    uf
-  });
-
-  return response.json({ id });
-});
+routes.post('/ongs', OngController.create);
+routes.post('/incidents', IncidentsController.create);
 
 module.exports = routes;
