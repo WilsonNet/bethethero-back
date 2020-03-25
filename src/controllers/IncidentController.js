@@ -31,7 +31,7 @@ module.exports = {
       .first();
 
     if (!incident) {
-      return response.status(404).json({ error: 'Incident not found.' });
+      return response.status(400).json({ error: 'Incident not found.' });
     }
     // Checar se a ONG tem o Incident
     if (incident.ong_id !== ong_id) {
