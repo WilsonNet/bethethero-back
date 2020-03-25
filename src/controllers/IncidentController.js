@@ -27,8 +27,12 @@ module.exports = {
 
     const incident = await connection('incidents')
       .where('id', id)
-      .select('ong_id').first;
+      .select('ong_id')
+      .first();
 
+    if (!incident) {
+      return response.status(404).json({ error: 'Incident not found.' });
+    }
     // Checar se a ONG tem o Incident
     if (incident.ong_id !== ong_id) {
       return response.status(401).json({ error: 'Operation not permited.' });
